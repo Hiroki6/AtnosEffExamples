@@ -1,5 +1,6 @@
-package app.controllers
+package app
 
+import app.controllers.{ CreatePostController, HelloWorld }
 import cats.effect.{ ExitCode, IO, IOApp }
 import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
