@@ -11,5 +11,5 @@ trait EffValidateSyntax {
 
 final class EffValidateOps[R: _errorOr, F[_], A](private val fa: Eff[R, F[A]]) {
   def validate(message: String)(implicit E: EffValidate[F, A]): Eff[R, Unit] =
-    E.validate(fa)(message)
+    E.validate[R](fa)(message)
 }

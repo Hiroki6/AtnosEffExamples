@@ -21,11 +21,10 @@ trait OptionInstance {
   }
 
   implicit final def optionEffValidate[A] = new EffValidate[Option, A] {
-    override def validate[R: _errorOr](fa: Eff[R, Option[A]])(message: String): Eff[R, Unit] = {
-      fa.flatMap { optValue =>
-        validateOption(optValue, message)
-      }
-    }
+    override def validate[R: _errorOr](fa: Eff[R, Option[A]])(message: String): Eff[R, Unit] =
+      for {
+        optValue <- fa
+      } yield validateOption(optValue, message)
   }
 
   implicit final def optionEffEither[A] = new EffEither[Option, A] {

@@ -3,7 +3,7 @@ package app.presenters
 import app.services.CreatePostDTO
 import cats.Id
 import cats.effect.IO
-import app.commons.validation.ErrorOr
+import app.commons.validation.{ ErrorOr, ThrowableEither }
 import org.http4s.circe.jsonEncoderOf
 import io.circe.generic.auto._
 import org.http4s.Response
@@ -11,10 +11,10 @@ import org.http4s.Response
 trait CreatePostPresenter extends JsonPresenter[Id, ErrorOr[CreatePostDTO]] {
   implicit val encoder = jsonEncoderOf[IO, CreatePostDTO]
 
-  override def execute(arg: Either[Throwable, ErrorOr[CreatePostDTO]]): IO[Response[IO]] = {
+  def execute(arg: ThrowableEither[ErrorOr[ThrowableEither[CreatePostDTO]]]): IO[Response[IO]] = {
     arg.fold(
       handleException,
-      handleErrorOr[CreatePostDTO]
+      handleErrorOrEt[CreatePostDTO]
     )
   }
 }

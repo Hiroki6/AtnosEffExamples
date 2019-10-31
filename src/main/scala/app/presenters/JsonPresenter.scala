@@ -3,7 +3,7 @@ package app.presenters
 import cats.data.NonEmptyList
 import cats.effect.IO
 import app.commons.PreconditionException
-import app.commons.validation.{ EitherThrowable, ErrorOr }
+import app.commons.validation.{ ErrorOr, ThrowableEither }
 import io.circe.Encoder
 import org.http4s.Response
 import org.http4s.dsl.io._
@@ -11,11 +11,22 @@ import io.circe.syntax._
 import org.http4s.circe._
 
 trait JsonPresenter[F[_], A] {
-  def execute(arg: F[EitherThrowable[A]]): IO[Response[IO]]
-
   protected def handleErrorOr[R: Encoder](errorOr: ErrorOr[R]): IO[Response[IO]] =
     errorOr.fold[IO[Response[IO]]](
       failure,
+      success[R]
+    )
+
+  protected def handleErrorOrEt[R: Encoder](
+      errorOrEt: ErrorOr[ThrowableEither[R]]): IO[Response[IO]] =
+    errorOrEt.fold[IO[Response[IO]]](
+      failure,
+      handleEt
+    )
+
+  protected def handleEt[R: Encoder](et: ThrowableEither[R]): IO[Response[IO]] =
+    et.fold(
+      handleException,
       success[R]
     )
 

@@ -5,7 +5,7 @@ import org.atnos.eff.MemberIn.|=
 import org.atnos.eff.Validate
 
 object validation {
-  type EitherThrowable[A] = Either[Throwable, A]
+  type ThrowableEither[A] = Either[Throwable, A]
   type ErrorOr[A] = ValidatedNel[String, A]
   type Validated[A] = Validate[String, A]
   type _errorOr[R] = Validated |= R
