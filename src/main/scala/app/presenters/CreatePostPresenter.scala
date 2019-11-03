@@ -1,20 +1,19 @@
 package app.presenters
 
 import app.services.CreatePostDTO
-import cats.Id
 import cats.effect.IO
-import app.commons.validation.{ ErrorOr, ThrowableEither }
+import app.commons.validation.ThrowableEither
 import org.http4s.circe.jsonEncoderOf
 import io.circe.generic.auto._
 import org.http4s.Response
 
-trait CreatePostPresenter extends JsonPresenter[Id, ErrorOr[CreatePostDTO]] {
+trait CreatePostPresenter extends JsonPresenter[ThrowableEither, ThrowableEither[CreatePostDTO]] {
   implicit val encoder = jsonEncoderOf[IO, CreatePostDTO]
 
-  def execute(arg: ThrowableEither[ErrorOr[ThrowableEither[CreatePostDTO]]]): IO[Response[IO]] = {
+  override def execute(arg: ThrowableEither[ThrowableEither[CreatePostDTO]]): IO[Response[IO]] = {
     arg.fold(
       handleException,
-      handleErrorOrEt[CreatePostDTO]
+      handleEt[CreatePostDTO]
     )
   }
 }

@@ -3,10 +3,10 @@ Sample codes for [this slides](https://speakerdeck.com/hiroki6/extensible-effect
 
 ## examples
 - mtls  
-Implementing monad stack with monad transformers in [cats](https://github.com/typelevel/cats).
+Implementation of monad stack with monad transformers in [cats](https://github.com/typelevel/cats).
 
 - effs  
-Implementing monad stack with [atnos-eff](https://github.com/atnos-org/eff).
+Implementation of monad stack with [atnos-eff](https://github.com/atnos-org/eff).
 
 ## app
 Sample codes of Layered Architecture with [atnos-eff](https://github.com/atnos-org/eff).
