@@ -1,4 +1,4 @@
-# SampleAtnosEff
+# AtnosEffExamples
 Sample codes for [this slides](https://speakerdeck.com/hiroki6/extensible-effects-beyond-the-monad-transformers).
 
 ## examples
